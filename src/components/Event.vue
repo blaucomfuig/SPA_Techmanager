@@ -3,12 +3,11 @@
         <div class="card-container">
              <h3>{{title}}</h3>
              <p>{{description}}</p>
-             <button @click="showUsers(`${id}`)"  class="btn-card">subscribed users</button>
+             <button @click="showUsers(`${id}`); state = !state"  class="btn-card">{{state ? "hide users" : "show users"}}</button>
         </div>
-        <div v-if="showUsers" >
-            <p v-for="user in subscribed" :key="user">
-                {{user.name}}
-            </p>
+        <div v-if="state" >
+            <Subscribed v-for="user in subscribed" :key="user" :name="user.name"  />
+            
         </div>
        
     </div>
@@ -17,14 +16,21 @@
 <script>
 
 import axios from 'axios'
+import Subscribed from './Subscribed.vue'
 
 export default {
    name: 'Event',
    props: ['title', 'description', 'id'],
+  
+   components: {
+       Subscribed
+   },
 
    data(){
        return{
-           subscribed: []
+           subscribed: [],
+            state: true
+            
        }
        
    },
@@ -33,6 +39,7 @@ export default {
        showUsers(id){
          axios.get(`http://127.0.0.1:8000/api/events/${id}/subscribed`).then(response => {
           this.subscribed = response.data
+          !this.state
           
           })
 
