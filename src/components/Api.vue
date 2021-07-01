@@ -1,7 +1,6 @@
-
 <template>
     <div>
-        <ul v-for="event in events" v-bind:key="event">
+        <ul v-for="event in events" v-bind:key="event.id">
             <li>{{event.title}}</li>
         </ul>
        
@@ -9,14 +8,10 @@
     
 </template>
 
-
-
-
 <script>
 
 
 export default {
-  name: 'HelloWorld',
     data(){
         return {
             events: []
