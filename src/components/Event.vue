@@ -5,8 +5,10 @@
              <p>{{description}}</p>
              <button @click="showUsers(`${id}`)"  class="btn-card">subscribed users</button>
         </div>
-        <div v-for="user in subscribed" :key="user">
-            {{user.name}}
+        <div v-if="showUsers" >
+            <p v-for="user in subscribed" :key="user">
+                {{user.name}}
+            </p>
         </div>
        
     </div>
