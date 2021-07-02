@@ -5,7 +5,7 @@
       {{user.name}}
       {{user.email}}
     </div> -->
-    <Event v-for="event in events" :key="event" :id="event.id" :title="event.title" :description="event.description"  />
+    <Event v-for="event in events"  :key="event.index" :id="event.id" :title="event.title" :description="event.description"  />
     
 
     
@@ -44,6 +44,7 @@ export default {
         this.events = response.data
         })
       },
+
        
   }
      

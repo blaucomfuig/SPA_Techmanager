@@ -3,10 +3,11 @@
         <div class="card-container">
              <h3>{{title}}</h3>
              <p>{{description}}</p>
+             <img class="imgCard" v-bind:src="image" alt="" >
              <button @click="showUsers(`${id}`); state = !state"  class="btn-card">{{state ? "hide users" : "show users"}}</button>
         </div>
         <div v-if="state" >
-            <Subscribed v-for="user in subscribed" :key="user" :name="user.name"  />
+            <Subscribed v-for="user in subscribed" :key="user.index" :name="user.name"   />
             
         </div>
        
@@ -29,11 +30,17 @@ export default {
    data(){
        return{
            subscribed: [],
-            state: false
+            state: false,
+            image: " "
             
        }
        
    },
+
+   mounted(){
+       this.catchImageApi();
+   },
+
 
    methods : {
        showUsers(id){
@@ -43,7 +50,16 @@ export default {
           
           })
 
-       }
+       },
+
+      catchImageApi(){
+          axios.get(`http://127.0.0.1:8000/api/events/${this.id}/image`).then(response => {
+            this.image = response.data
+            console.log(this.image)
+        })
+
+
+      }
    }
 
 
@@ -57,7 +73,7 @@ export default {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 25vh;
+        height: 40vh;
         max-width: 90vw;
         background-color: rgb(209, 228, 198) ;
         margin: 1rem auto;
@@ -79,6 +95,10 @@ export default {
     .btn-card:hover {
         background-color: rgb(157, 231, 113);
         
+    }
+
+    .imgCard{
+        width: 8rem;
     }
 </style>
 
